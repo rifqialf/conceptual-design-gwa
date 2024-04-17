@@ -1,0 +1,245 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.org/schema/infra.json",
+    "$defs": {
+        "Address": {
+            "$anchor": "Address",
+            "type": "object",
+            "properties": {
+                "street": {
+                    "type": "string"
+                },
+                "housenumber": {
+                    "type": "string"
+                },
+                "poBox": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "postalCode": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "city",
+                "postalCode"
+            ]
+        },
+        "Building": {
+            "$anchor": "Building",
+            "allOf": [
+                {
+                    "$ref": "#/$defs/Building_Core"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "properties": {
+                            "type": "object",
+                            "properties": {
+                                "address": {
+                                    "$ref": "#/$defs/Address"
+                                },
+                                "type": {
+                                    "$ref": "#/$defs/BuildingType"
+                                }
+                            },
+                            "required": [
+                                "address",
+                                "type"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "properties"
+                    ]
+                }
+            ]
+        },
+        "BuildingPart": {
+            "$anchor": "BuildingPart",
+            "allOf": [
+                {
+                    "$ref": "#/$defs/Building_Core"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "properties": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "$ref": "#/$defs/BuildingPartType"
+                                },
+                                "clearanceHeight": {
+                                    "type": "number",
+                                    "unit": "m"
+                                },
+                                "extent3d": {
+                                    "$ref": "https://beta.schemas.opengis.net/json-fg/geometry-objects.json#/$defs/Polyhedron"
+                                },
+                                "belongsTo": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                                    },
+                                    "uniqueItems": true
+                                }
+                            },
+                            "required": [
+                                "extent3d",
+                                "type"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "properties"
+                    ]
+                }
+            ]
+        },
+        "BuildingPartType": {
+            "$anchor": "BuildingPartType",
+            "type": "integer",
+            "enum": [
+                1000,
+                2000,
+                2100,
+                3000,
+                9999
+            ]
+        },
+        "BuildingType": {
+            "$anchor": "BuildingType",
+            "type": "string",
+            "enum": [
+                "school",
+                "residential house",
+                "mixed",
+                "other"
+            ]
+        },
+        "Building_Core": {
+            "$anchor": "Building_Core",
+            "allOf": [
+                {
+                    "$ref": "https://geojson.org/schema/Feature.json"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "geometry": {
+                            "$ref": "https://geojson.org/schema/Polygon.json"
+                        },
+                        "properties": {
+                            "type": "object",
+                            "properties": {
+                                "dateOfConstruction": {
+                                    "type": "string",
+                                    "format": "date",
+                                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                                }
+                            },
+                            "required": [
+                                "dateOfConstruction"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "properties"
+                    ]
+                }
+            ]
+        },
+        "Parcel": {
+            "$anchor": "Parcel",
+            "allOf": [
+                {
+                    "$ref": "https://geojson.org/schema/Feature.json"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "geometry": {
+                            "$ref": "https://geojson.org/schema/Polygon.json"
+                        },
+                        "properties": {
+                            "type": "object",
+                            "properties": {
+                                "area": {
+                                    "type": "number",
+                                    "unit": "m2"
+                                },
+                                "hasBuilding": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                                    },
+                                    "uniqueItems": true
+                                },
+                                "owner": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                                    },
+                                    "uniqueItems": true
+                                }
+                            },
+                            "required": [
+                                "area",
+                                "owner"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "properties"
+                    ]
+                }
+            ]
+        },
+        "Person": {
+            "$anchor": "Person",
+            "allOf": [
+                {
+                    "$ref": "https://geojson.org/schema/Feature.json"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "properties": {
+                            "type": "object",
+                            "properties": {
+                                "firstName": {
+                                    "type": "string"
+                                },
+                                "lastName": {
+                                    "type": "string"
+                                },
+                                "owns": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                                    },
+                                    "uniqueItems": true
+                                }
+                            },
+                            "required": [
+                                "firstName",
+                                "lastName"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "properties"
+                    ]
+                }
+            ]
+        }
+    }
+}

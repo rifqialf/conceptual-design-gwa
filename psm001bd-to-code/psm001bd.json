@@ -1,0 +1,431 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.org/schema/infra.json",
+    "$defs": {
+        "Pool": {
+            "$anchor": "Pool",
+            "type": "object",
+            "properties": {
+                "user": {
+                    "type": "string",
+                    "default": "postgres"
+                },
+                "host": {
+                    "type": "string",
+                    "default": "localhost"
+                },
+                "database": {
+                    "type": "string",
+                    "default": "thesis"
+                },
+                "password": {
+                    "type": "string",
+                    "default": "123456789"
+                },
+                "port": {
+                    "type": "integer",
+                    "default": 5434
+                }
+            },
+            "required": [
+                "user",
+                "host",
+                "database",
+                "password",
+                "port"
+            ]
+        },
+        "EnschedeBuilding": {
+            "$anchor": "EnschedeBuilding",
+            "type": "object",
+            "properties": {
+                "properties": {
+                    "gid": {
+                        "type": "integer"
+                    },
+                    "geom": {
+                        "$ref": "https://geojson.org/schema/Point.json"
+                    },
+                    "building_type": {
+                        "type": "string"
+                    },
+                    "built_year": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "required": [
+                "gid",
+                "geom"
+            ]
+        },
+        "EnschedeBusStop": {
+            "$anchor": "EnschedeBusStop",
+            "type": "object",
+            "properties": {
+                "properties": {
+                    "gid": {
+                        "type": "integer"
+                    },
+                    "geom": {
+                        "$ref": "https://geojson.org/schema/Point.json"
+                    },
+                    "station_name": {
+                        "type": "string"
+                    },
+                    "lat": {
+                        "type": "string"
+                    },
+                    "lon": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "gid",
+                "geom"
+            ]
+        },
+        "PostgreSql": {
+            "$anchor": "postgresql",
+            "type": "object",
+            "properties": {},
+            "required": []
+        },
+        "BuildingData": {
+            "$anchor": "BuildingData",
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "default": "SELECT gid, building_type, built_year, ST_AsGeoJSON(ST_FlipCoordinates(geom)) FROM enschede.building_4326 WHERE (building_type = 1 AND built_year >= 2000)"
+                }
+            },
+            "required": [
+                "properties"
+            ],
+            "methods": {
+                "runQuery": {
+                    "return": "object"
+                }
+            }
+        },
+        "BusStopData": {
+            "$anchor": "BusStopData",
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "default": "SELECT gid,station_name,ST_AsText(geom), lat,lon FROM enschede.busstop"
+                }
+            },
+            "required": [
+                "properties"
+            ],
+            "methods": {
+                "runQuery": {
+                    "return": "object"
+                }
+            }
+        },
+        "FetchBuildingData": {
+            "$anchor": "FetchBuildingData",
+            "type": "object",
+            "properties": {
+                "request": {
+                    "type": "object"
+                },
+                "response": {
+                    "type": "object"
+                },
+                "data": {
+                    "type": {
+                        "href": "#/defs/BuildingData"
+                    }
+                }
+            },
+            "required": [
+                "response",
+                "data"
+            ],
+            "methods": {
+                "createJson": {
+                    "return": "object"
+                }
+            }
+        },
+        "FetchBusStopData": {
+            "$anchor": "FetchBusStopData",
+            "type": "object",
+            "properties": {
+                "request": {
+                    "type": "object"
+                },
+                "response": {
+                    "type": "object"
+                },
+                "data": {
+                    "type": {
+                        "href": "#/defs/BuildingData"
+                    }
+                }
+            },
+            "required": [
+                "response",
+                "data"
+            ],
+            "methods": {
+                "createJson": {
+                    "return": "object"
+                }
+            }
+        },
+        "BuildingRoute": {
+            "$anchor": "BuildingRoute",
+            "type": "object",
+            "properties": {
+                "path": {
+                    "type": "string",
+                    "default": "/building"
+                },
+                "method": {
+                    "type": "string",
+                    "default": "get"
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "BusStopRoute": {
+            "$anchor": "BusStopRoute",
+            "type": "object",
+            "properties": {
+                "path": {
+                    "type": "string",
+                    "default": "/busstop"
+                }
+            },
+            "required": [
+                "properties"
+            ],
+            "method": {
+                "type": "string",
+                "default": "get"
+            }
+        },
+        "BackendServer": {
+            "$anchor": "BackendServer",
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "integer",
+                    "default": "5000"
+                }
+            },
+            "required": [
+                "properties"
+            ],
+            "methods": {
+                "startExpress": {
+                    "return": "void"
+                },
+                "useCors": {
+                    "return": "void"
+                },
+                "useRoutes": {
+                    "return": "void"
+                },
+                "listenServer": {
+                    "return": "void"
+                }
+            }
+        },
+        "FetchBuilding": {
+            "$anchor": "FetchBuilding",
+            "type": "object",
+            "properties": {
+                "baseUrl": {
+                    "type": "string",
+                    "default": "http://localhost:5000"
+                },
+                "path": {
+                    "type": "string",
+                    "default": "/building"
+                }
+            },
+            "required": [
+                "properties"
+            ],
+            "methods": {
+                "axiosGet": {
+                    "return": "void"
+                },
+                "updateState": {
+                    "return": "void"
+                }
+            }
+        },
+        "FetchBusStop": {
+            "$anchor": "FetchBusStop",
+            "type": "object",
+            "properties": {
+                "baseUrl": {
+                    "type": "string",
+                    "default": "http://localhost:5000"
+                },
+                "path": {
+                    "type": "string",
+                    "default": "/busstop"
+                }
+            },
+            "required": [],
+            "methods": {
+                "axiosGet": {
+                    "return": "void"
+                },
+                "updateState": {
+                    "return": "void"
+                }
+            }
+        },
+        "GeoJsonParser": {
+            "$anchor": "GeoJsonParser",
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object"
+                }
+            },
+            "required": [],
+            "methods": {
+                "parseJson": {
+                    "return": "object"
+                }
+            },
+            "MapContainer": {
+                "$anchor": "MapContainer",
+                "type": "object",
+                "properties": {
+                    "center": {
+                        "type": "array",
+                        "default": [
+                            52.206749,
+                            6.8962
+                        ],
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "zoom": {
+                        "type": "integer",
+                        "default": "13"
+                    },
+                    "height": {
+                        "type": "string",
+                        "default": "100vh"
+                    },
+                    "width": {
+                        "type": "string",
+                        "default": "100%"
+                    }
+                },
+                "required": [
+                    "properties"
+                ],
+                "methods": {
+                    "useState": {
+                        "return": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "useEffect": {
+                        "return": "void"
+                    }
+                }
+            }
+        },
+        "BusStopComponent": {
+            "$anchor": "BusStopComponent",
+            "type": "object",
+            "properties": {
+                "gid": {
+                    "type": "integer"
+                },
+                "color": {
+                    "type": "string",
+                    "default": "blue"
+                },
+                "position": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "BuildingComponent": {
+            "$anchor": "BuildingComponent",
+            "type": "object",
+            "properties": {
+                "gid": {
+                    "type": "integer"
+                },
+                "position": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "BusStopInfoPopup": {
+            "$anchor": "BusStopInfoPopup",
+            "type": "object",
+            "properties": {
+                "builtYear": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "BuildingInfoPopup": {
+            "$anchor": "BuildingInfoPopup",
+            "type": "object",
+            "properties": {
+                "stationName": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "App": {
+            "$anchor": "App",
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "integer",
+                    "default": "3000"
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        }
+    }
+}
