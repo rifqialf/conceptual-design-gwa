@@ -62,7 +62,7 @@
         "Map": {
             "$anchor": "Map",
             "type": {
-                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/UIElements"
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/UIComponent"
             },
             "properties": {
                 "data": {
