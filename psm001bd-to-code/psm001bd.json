@@ -1,5 +1,5 @@
 {
-    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "http://example.org/schema/infra.json",
     "$defs": {
         "Pool": {
@@ -25,43 +25,64 @@
                 "port": {
                     "type": "integer",
                     "default": 5434
+                },
+                "has": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
                 }
             },
             "required": [
-                "user",
-                "host",
-                "database",
-                "password",
-                "port"
+                "properties"
             ]
         },
-        "EnschedeBuilding": {
-            "$anchor": "EnschedeBuilding",
-            "type": "object",
+        "PostgreSql": {
+            "$anchor": "postgresql",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/DataContainer"
+            },
+            "properties": {},
+            "required": []
+        },
+        "Building": {
+            "$anchor": "Building",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/DataModel"
+            },
             "properties": {
                 "properties": {
                     "gid": {
                         "type": "integer"
                     },
                     "geom": {
-                        "$ref": "https://geojson.org/schema/Point.json"
+                        "$ref": "https://geojson.org/schema/Polygon.json"
                     },
                     "building_type": {
                         "type": "string"
                     },
                     "built_year": {
                         "type": "integer"
+                    },
+                    "ConnectToBuildingData": {
+                        "type": {
+                            "$ref": "#/$defs/ConnectToBuildingData"
+                        }
                     }
                 }
             },
             "required": [
                 "gid",
-                "geom"
+                "geom",
+                "ConnectToBuildingData"
             ]
         },
-        "EnschedeBusStop": {
-            "$anchor": "EnschedeBusStop",
-            "type": "object",
+        "BusStop": {
+            "$anchor": "BusStop",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/DataModel"
+            },
             "properties": {
                 "properties": {
                     "gid": {
@@ -78,23 +99,25 @@
                     },
                     "lon": {
                         "type": "string"
+                    },
+                    "ConnectToBusStopData": {
+                        "type": {
+                            "$ref": "#/$defs/ConnectToBusStopData"
+                        }
                     }
                 }
             },
             "required": [
                 "gid",
-                "geom"
+                "geom",
+                "ConnectToBusStopData"
             ]
         },
-        "PostgreSql": {
-            "$anchor": "postgresql",
-            "type": "object",
-            "properties": {},
-            "required": []
-        },
-        "BuildingData": {
-            "$anchor": "BuildingData",
-            "type": "object",
+        "ConnectToBuildingData": {
+            "$anchor": "ConnectToBuildingData",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/DatabaseConnection"
+            },
             "properties": {
                 "query": {
                     "type": "string",
@@ -103,15 +126,10 @@
             },
             "required": [
                 "properties"
-            ],
-            "methods": {
-                "runQuery": {
-                    "return": "object"
-                }
-            }
+            ]
         },
-        "BusStopData": {
-            "$anchor": "BusStopData",
+        "ConnectToBusStopData": {
+            "$anchor": "ConnectToBusStopData",
             "type": "object",
             "properties": {
                 "query": {
@@ -121,76 +139,81 @@
             },
             "required": [
                 "properties"
-            ],
-            "methods": {
+            ]
+        },
+        "DataFetcher": {
+            "$anchor": "DataFetcher",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/BackendService"
+            },
+            "properties": {
+                "pool": {
+                    "type": {
+                        "$ref": "#/$defs/Pool"
+                    }
+                },
                 "runQuery": {
-                    "return": "object"
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
                 }
-            }
+            },
+            "required": [
+                "properties"
+            ]
         },
         "FetchBuildingData": {
             "$anchor": "FetchBuildingData",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/HttpProtocol"
+            },
             "properties": {
                 "request": {
                     "type": "object"
                 },
                 "response": {
                     "type": "object"
-                },
-                "data": {
-                    "type": {
-                        "href": "#/defs/BuildingData"
-                    }
                 }
             },
             "required": [
-                "response",
-                "data"
-            ],
-            "methods": {
-                "createJson": {
-                    "return": "object"
-                }
-            }
+                "response"
+            ]
         },
         "FetchBusStopData": {
-            "$anchor": "FetchBusStopData",
-            "type": "object",
+            "$anchor": "FetchBuildingData",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/HttpProtocol"
+            },
             "properties": {
                 "request": {
                     "type": "object"
                 },
                 "response": {
                     "type": "object"
-                },
-                "data": {
-                    "type": {
-                        "href": "#/defs/BuildingData"
-                    }
                 }
             },
             "required": [
-                "response",
-                "data"
-            ],
-            "methods": {
-                "createJson": {
-                    "return": "object"
-                }
-            }
+                "response"
+            ]
         },
         "BuildingRoute": {
             "$anchor": "BuildingRoute",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Route"
+            },
             "properties": {
+                "method": {
+                    "type": "string",
+                    "default": "get"
+                },
                 "path": {
                     "type": "string",
                     "default": "/building"
                 },
-                "method": {
-                    "type": "string",
-                    "default": "get"
+                "startRouter": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
                 }
             },
             "required": [
@@ -199,47 +222,62 @@
         },
         "BusStopRoute": {
             "$anchor": "BusStopRoute",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Route"
+            },
             "properties": {
+                "method": {
+                    "type": "string",
+                    "default": "get"
+                },
                 "path": {
                     "type": "string",
                     "default": "/busstop"
+                },
+                "startRouter": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
                 }
             },
             "required": [
                 "properties"
-            ],
-            "method": {
-                "type": "string",
-                "default": "get"
-            }
+            ]
         },
-        "BackendServer": {
-            "$anchor": "BackendServer",
-            "type": "object",
+        "Server": {
+            "$anchor": "Server",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Server"
+            },
             "properties": {
                 "port": {
                     "type": "integer",
                     "default": "5000"
+                },
+                "startExpress": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
+                },
+                "useCors": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
+                },
+                "useRoutes": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
+                },
+                "listenServer": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
                 }
             },
             "required": [
                 "properties"
-            ],
-            "methods": {
-                "startExpress": {
-                    "return": "void"
-                },
-                "useCors": {
-                    "return": "void"
-                },
-                "useRoutes": {
-                    "return": "void"
-                },
-                "listenServer": {
-                    "return": "void"
-                }
-            }
+            ]
         },
         "FetchBuilding": {
             "$anchor": "FetchBuilding",
