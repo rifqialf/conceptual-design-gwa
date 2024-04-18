@@ -43,8 +43,31 @@
             "type": {
                 "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/DataContainer"
             },
-            "properties": {},
-            "required": []
+            "properties": {
+                "schema": {
+                    "type": "string",
+                    "default": "enschede"
+                },
+                "table": {
+                    "type": "array",
+                    "default": [
+                        {
+                            "$ref": "#/$def/Building"
+                        },
+                        {
+                            "$ref": "#/$def/BusStop"
+                        }
+                    ],
+                    "items": {
+                        "type": {
+                            "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/DataModel"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "properties"
+            ]
         },
         "Building": {
             "$anchor": "Building",
@@ -64,18 +87,12 @@
                     },
                     "built_year": {
                         "type": "integer"
-                    },
-                    "ConnectToBuildingData": {
-                        "type": {
-                            "$ref": "#/$defs/ConnectToBuildingData"
-                        }
                     }
                 }
             },
             "required": [
                 "gid",
-                "geom",
-                "ConnectToBuildingData"
+                "geom"
             ]
         },
         "BusStop": {
@@ -99,18 +116,12 @@
                     },
                     "lon": {
                         "type": "string"
-                    },
-                    "ConnectToBusStopData": {
-                        "type": {
-                            "$ref": "#/$defs/ConnectToBusStopData"
-                        }
                     }
                 }
             },
             "required": [
                 "gid",
-                "geom",
-                "ConnectToBusStopData"
+                "geom"
             ]
         },
         "ConnectToBuildingData": {
@@ -130,7 +141,9 @@
         },
         "ConnectToBusStopData": {
             "$anchor": "ConnectToBusStopData",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/DatabaseConnection"
+            },
             "properties": {
                 "query": {
                     "type": "string",
@@ -141,8 +154,8 @@
                 "properties"
             ]
         },
-        "DataFetcher": {
-            "$anchor": "DataFetcher",
+        "DataAccessService": {
+            "$anchor": "DataAccessService",
             "type": {
                 "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/BackendService"
             },
@@ -156,14 +169,32 @@
                     "type": {
                         "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
                     }
+                },
+                "ConnectToBuildingData": {
+                    "type": {
+                        "$ref": "#/$defs/ConnectToBuildingData"
+                    },
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                },
+                "ConnectToBusStopData": {
+                    "type": {
+                        "$ref": "#/$defs/ConnectToBusStopData"
+                    },
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
                 }
             },
             "required": [
                 "properties"
             ]
         },
-        "FetchBuildingData": {
-            "$anchor": "FetchBuildingData",
+        "AccessBuildingData": {
+            "$anchor": "AccessBuildingData",
             "type": {
                 "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/HttpProtocol"
             },
@@ -179,8 +210,8 @@
                 "response"
             ]
         },
-        "FetchBusStopData": {
-            "$anchor": "FetchBuildingData",
+        "AccessBusStopData": {
+            "$anchor": "AccessBusStopData",
             "type": {
                 "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/HttpProtocol"
             },
@@ -214,6 +245,15 @@
                     "type": {
                         "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
                     }
+                },
+                "AccessBuildingData": {
+                    "type": {
+                        "$ref": "#/$defs/AccessBuildingData"
+                    },
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
                 }
             },
             "required": [
@@ -238,6 +278,15 @@
                     "type": {
                         "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
                     }
+                },
+                "AccessBusStopData": {
+                    "type": {
+                        "$ref": "#/$defs/AccessBusStopData"
+                    },
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
                 }
             },
             "required": [
@@ -273,15 +322,58 @@
                     "type": {
                         "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
                     }
+                },
+                "use": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
                 }
             },
             "required": [
                 "properties"
             ]
         },
+        "FetchBuildingData": {
+            "$anchor": "FetchBuildingData",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/HttpProtocol"
+            },
+            "properties": {
+                "request": {
+                    "type": "object"
+                },
+                "response": {
+                    "type": "object"
+                }
+            },
+            "required": [
+                "response"
+            ]
+        },
+        "FetchBusStopData": {
+            "$anchor": "FetchBusStopData",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/HttpProtocol"
+            },
+            "properties": {
+                "request": {
+                    "type": "object"
+                },
+                "response": {
+                    "type": "object"
+                }
+            },
+            "required": [
+                "response"
+            ]
+        },
         "FetchBuilding": {
             "$anchor": "FetchBuilding",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/FrontEndService"
+            },
             "properties": {
                 "baseUrl": {
                     "type": "string",
@@ -290,23 +382,43 @@
                 "path": {
                     "type": "string",
                     "default": "/building"
+                },
+                "axiosGet": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
+                },
+                "updateState": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
+                },
+                "FetchBuildingData": {
+                    "type": {
+                        "$ref": "#/$defs/FetchBuildingData"
+                    },
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                },
+                "use": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
                 }
             },
             "required": [
                 "properties"
-            ],
-            "methods": {
-                "axiosGet": {
-                    "return": "void"
-                },
-                "updateState": {
-                    "return": "void"
-                }
-            }
+            ]
         },
         "FetchBusStop": {
             "$anchor": "FetchBusStop",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/FrontEndService"
+            },
             "properties": {
                 "baseUrl": {
                     "type": "string",
@@ -315,78 +427,119 @@
                 "path": {
                     "type": "string",
                     "default": "/busstop"
-                }
-            },
-            "required": [],
-            "methods": {
+                },
                 "axiosGet": {
-                    "return": "void"
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
                 },
                 "updateState": {
-                    "return": "void"
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
+                },
+                "fetchBusStopData": {
+                    "type": {
+                        "$ref": "#/$defs/FetchBusStopData"
+                    },
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                },
+                "use": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
                 }
-            }
+            },
+            "required": [
+                "properties"
+            ]
         },
         "GeoJsonParser": {
             "$anchor": "GeoJsonParser",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/FrontEndService"
+            },
             "properties": {
                 "data": {
                     "type": "object"
-                }
-            },
-            "required": [],
-            "methods": {
+                },
                 "parseJson": {
-                    "return": "object"
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
                 }
             },
-            "MapContainer": {
-                "$anchor": "MapContainer",
-                "type": "object",
-                "properties": {
-                    "center": {
-                        "type": "array",
-                        "default": [
-                            52.206749,
-                            6.8962
-                        ],
-                        "items": {
-                            "type": "number"
-                        }
-                    },
-                    "zoom": {
-                        "type": "integer",
-                        "default": "13"
-                    },
-                    "height": {
-                        "type": "string",
-                        "default": "100vh"
-                    },
-                    "width": {
-                        "type": "string",
-                        "default": "100%"
+            "required": [
+                "properties"
+            ]
+        },
+        "MapContainer": {
+            "$anchor": "MapContainer",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/UIComponent"
+            },
+            "properties": {
+                "center": {
+                    "type": "array",
+                    "default": [
+                        52.206749,
+                        6.8962
+                    ],
+                    "items": {
+                        "type": "number"
                     }
                 },
-                "required": [
-                    "properties"
-                ],
-                "methods": {
-                    "useState": {
-                        "return": "array",
-                        "items": {
-                            "type": "object"
-                        }
-                    },
-                    "useEffect": {
-                        "return": "void"
+                "zoom": {
+                    "type": "integer",
+                    "default": "13"
+                },
+                "height": {
+                    "type": "string",
+                    "default": "100vh"
+                },
+                "width": {
+                    "type": "string",
+                    "default": "100%"
+                },
+                "useState": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
                     }
+                },
+                "useEffect": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
+                },
+                "use": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                },
+                "render": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
                 }
-            }
+            },
+            "required": [
+                "properties"
+            ]
         },
-        "BusStopComponent": {
-            "$anchor": "BusStopComponent",
-            "type": "object",
+        "BuildingComponent": {
+            "$anchor": "BuildingComponent",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/UIComponent"
+            },
             "properties": {
                 "gid": {
                     "type": "integer"
@@ -402,15 +555,38 @@
                     "items": {
                         "type": "number"
                     }
+                },
+                "render": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
                 }
             },
             "required": [
                 "properties"
             ]
         },
-        "BuildingComponent": {
-            "$anchor": "BuildingComponent",
-            "type": "object",
+        "BuildingInfoPopup": {
+            "$anchor": "BuildingInfoPopup",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/UIComponent"
+            },
+            "properties": {
+                "stationName": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "BusStopComponent": {
+            "$anchor": "BusStopComponent",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/UIComponent"
+            },
             "properties": {
                 "gid": {
                     "type": "integer"
@@ -422,6 +598,13 @@
                     "items": {
                         "type": "number"
                     }
+                },
+                "render": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
                 }
             },
             "required": [
@@ -430,7 +613,9 @@
         },
         "BusStopInfoPopup": {
             "$anchor": "BusStopInfoPopup",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/UIComponent"
+            },
             "properties": {
                 "builtYear": {
                     "type": "integer"
@@ -440,12 +625,60 @@
                 "properties"
             ]
         },
-        "BuildingInfoPopup": {
-            "$anchor": "BuildingInfoPopup",
-            "type": "object",
+        "OpenStreetMap": {
+            "$anchor": "OpenStreetMap",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/DataService"
+            },
             "properties": {
-                "stationName": {
-                    "type": "integer"
+                "url": {
+                    "type": "string",
+                    "default": "https://b.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "FetchTileLayer": {
+            "$anchor": "FetchTileLayer",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/HttpProtocol"
+            },
+            "properties": {
+                "request": {
+                    "type": "object"
+                },
+                "response": {
+                    "type": "object"
+                }
+            },
+            "required": [
+                "response"
+            ]
+        },
+        "TileLayerComponent": {
+            "$anchor": "TileLayerComponent",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/UIComponent"
+            },
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "default": "https://b.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+                },
+                "attributionurl": {
+                    "type": "string",
+                    "default": "https://www.openstreetmap.org/copyright"
+                },
+                "fetchTileLayer": {
+                    "type": {
+                        "$ref": "#/$defs/FetchTileLayer"
+                    },
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
                 }
             },
             "required": [
@@ -454,11 +687,42 @@
         },
         "App": {
             "$anchor": "App",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/UIComponent"
+            },
             "properties": {
                 "port": {
                     "type": "integer",
                     "default": "3000"
+                },
+                "render": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "Root": {
+            "$anchor": "Root",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/UIComponent"
+            },
+            "properties": {
+                "port": {
+                    "type": "integer",
+                    "default": "3000"
+                },
+                "render": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
                 }
             },
             "required": [
