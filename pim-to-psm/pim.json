@@ -1,11 +1,11 @@
 {
-    "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "$id": "http://example.org/schema/infra.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://json-schema.org/draft/2020-12/schema",
     "$defs": {
-        "EnschedeBuilding": {
-            "$anchor": "EnschedeBuilding",
+        "Building": {
+            "$anchor": "Building",
             "type": {
-                "href": "CD-GWA-Profile.json#/$defs/DataContainer"
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/DataContainer"
             },
             "properties": {
                 "query": {
@@ -14,7 +14,7 @@
                 },
                 "datacontainer": {
                     "type": {
-                        "href": "___data container enumeration___"
+                        "$ref": "#/$defs/DataContainers"
                     },
                     "default": "PostgreSQL"
                 }
@@ -23,10 +23,10 @@
                 "properties"
             ]
         },
-        "EnschedeBusStop": {
-            "$anchor": "EnschedeBusStop",
+        "BusStop": {
+            "$anchor": "BusStop",
             "type": {
-                "href": "CD-GWA-Profile.json#/$defs/DataContainer"
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/DataContainer"
             },
             "query": {
                 "query": {
@@ -35,7 +35,7 @@
                 },
                 "datacontainer": {
                     "type": {
-                        "href": "___data container enumeration___"
+                        "$ref": "#/$defs/DataContainers"
                     },
                     "default": "PostgreSQL"
                 }
@@ -47,13 +47,11 @@
         "OpenStreetMap": {
             "$anchor": "OpenStreetMap",
             "type": {
-                "href": "___stereotype___"
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/DataService"
             },
             "query": {
                 "url": {
-                    "type": {
-                        "href": "___data container enumeration___"
-                    },
+                    "type": "string",
                     "default": "https://b.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
                 }
             },
@@ -64,48 +62,74 @@
         "Map": {
             "$anchor": "Map",
             "type": {
-                "href": "___UI Element stereotype___"
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/UIComponent"
             },
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
                         "type": {
-                            "href": "___data container stereotypes___"
+                            "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/DataContainer"
                         },
                         "default": [
                             {
-                                "href": "___Enschede Buildilng___"
+                                "$ref": "#/$defs/Building"
                             },
                             {
-                                "href": "___Enschede Busstop___"
+                                "$ref": "#/$defs/BusStop"
                             }
                         ]
                     },
                     "default": "https://b.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+                },
+                "uses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                },
+                "updateMap": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
+                },
+                "dragMap": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
+                },
+                "zoomMap": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
+                },
+                "selectDisplayedData": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
+                },
+                "showDataInformation": {
+                    "type": {
+                        "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/CD-GWA-Profile.json#/$defs/Function"
+                    }
                 }
             },
             "required": [
                 "properties"
-            ],
-            "methods": {
-                "updateMap": {
-                    "return": null
-                },
-                "dragMap": {
-                    "return": null
-                },
-                "zoomMap": {
-                    "return": null
-                },
-                "selectDisplayedData": {
-                    "return": null
-                },
-                "showDataInformation": {
-                    "return": null
-                }
-            }
-
+            ]
         },
+        "DataContainers": {
+            "$anchor": "DataContainers",
+            "type": "string",
+            "enum": [
+                "PostgreSQL",
+                "MongoDB",
+                "MySQL",
+                "SQLite",
+                "Apache Cassandra",
+                "DynamoDB"
+            ]
+        }
     }
 }
