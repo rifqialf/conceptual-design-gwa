@@ -1,15 +1,14 @@
 import React from "react";
 import { Polygon } from "react-leaflet";
-import PopupComponent from "./PopupInfo.jsx";
+// import PopupComponent from "./PopupInfo.jsx";
 
 function BuildingComponent(data) {
   return (
     <Polygon
-      key={data.gid}
-      pathOptions={{ color: "purple" }}
+      pathOptions={{ color: "gray" }}
       positions={data.geometry.coordinates}
     >
-      {PopupComponent("Built Year: " + data.built_year + "\nClosest Station: ")}
+      {/* {PopupComponent("Built Year: " + data.built_year + "\nClosest Station: ")} */}
     </Polygon>
   );
 }

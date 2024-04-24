@@ -3,7 +3,7 @@ const { pool } = require("../config/db.js");
 async function busstopData() {
   try {
     const { rows } = await pool.query(
-      "SELECT gid, station_name, ST_AsGeoJSON(ST_FlipCoordinates(geom)) FROM enschede.busstop"
+      "SELECT id, city, ST_AsGeoJSON(ST_FlipCoordinates(geom)) FROM enschede.bus_stop WHERE city = 'Enschede' OR city = 'Hengelo' OR city = 'Haaksbergen'"
     );
     return { rows }; 
   } catch (err) {

@@ -33,7 +33,7 @@ function MapComponent() {
   const fetchBuilding = async () => {
     try {
       const response = await axios.get(
-        "https://service.pdok.nl/lv/bag/wfs/v2_0?request=GetFeature&service=WFS&version=1.1.0&outputFormat=application%2Fjson%3B%20subtype%3Dgeojson&typeName=bag:woonplaats&featureID=woonplaats.e056df53-0d6b-4c6c-90ac-9c54453593aa"
+        "https://service.pdok.nl/lv/bag/wfs/v2_0?request=GetFeature&service=WFS&version=1.1.0&outputFormat=application%2Fjson%3B%20subtype%3Dgeojson&typeName=bag:woonplaats&featureID=woonplaats.e056df53-0d6b-4c6c-90ac-9c54453593aa,woonplaats.27fd8d3c-84e7-4fba-8555-75fc722c39ee,woonplaats.8261516e-b316-4b81-a6d8-6127622050e8"
       );
       const reprojected = convertCRS(response.data);
       const flipped = flipCoordinates(reprojected);
@@ -47,8 +47,8 @@ function MapComponent() {
 
   return (
     <MapContainer
-      center={[52.206749, 6.89682]}
-      zoom={13}
+      center={[52.21500, 6.82000]}
+      zoom={12}
       style={{ height: "100vh", width: "100%" }}
     >
       {markers.map(BusStopComponent)}
