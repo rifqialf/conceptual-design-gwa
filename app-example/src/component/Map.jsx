@@ -2,15 +2,13 @@ import React, { useState, useEffect } from "react";
 import { MapContainer } from "react-leaflet";
 import axios from "axios";
 
-import BusStopComponent from "./BusStop.jsx";
 import BuildingComponent from "./Building.jsx";
+import BusStopComponent from "./BusStop.jsx";
 import TileLayerComponent from "./Tilelayer.jsx";
 
 import geoJsonParser from "../controller/geoJsonParser.js";
 import geoJsonParserWfs from "../controller/geoJsonParserWfs.js";
 import { convertCRS, flipCoordinates } from "../controller/convertCrs.js";
-
-// import "reproject" from "reproject";
 
 function MapComponent() {
   const [markers, setMarkers] = useState([]);

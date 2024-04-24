@@ -3,7 +3,7 @@ const reproject = require("reproject");
 const proj4 = require("proj4").default;
 
 function convertCRS(geojson) {
-  defineCrs()
+  defineCrs();
   geojson.features.forEach((feature) => {
     const geometry = feature.geometry;
     if (geometry && geometry.coordinates) {

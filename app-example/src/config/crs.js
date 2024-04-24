@@ -1,4 +1,4 @@
-const proj4 = require("proj4"); // Include proj4 library
+const proj4 = require("proj4");
 
 function defineCrs() {
   proj4.defs(
