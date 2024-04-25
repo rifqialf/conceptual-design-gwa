@@ -6,7 +6,7 @@ import axios from "axios";
 import geoJsonParser from "../controller/geoJsonParser.js";
 import { Typography } from "@mui/material";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   chartContainer: {
     width: "auto",
     height: "auto",
@@ -59,7 +59,7 @@ function PieChartComponent() {
   };
 
   function PieOnClick() {
-    
+
     
 
     setChartData()
@@ -77,12 +77,11 @@ function PieChartComponent() {
           {
             data: chartData,
             highlightScope: { faded: "global", highlighted: "item" },
-            faded: { innerRadius: 30, additionalRadius: -30, color: "gray" },
           },
         ]}
         width={400}
         height={200}
-        onItemClick={(event, d) => set(d)}
+        // onItemClick={(event, d) => set(d)}
       />
     </div>
   );

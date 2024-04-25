@@ -26,15 +26,15 @@ function MapComponent() {
   const [polygons, setPolygons] = useState([]);
 
   useEffect(() => {
-    fetchBusStop();
+    fetchAllBusStop();
     fetchCity();
   }, []);
 
-  const fetchBusStop = async () => {
+  const fetchAllBusStop = async () => {
     try {
       const response = await axios.get("http://localhost:5000/busstop");
       const points = response.data.map(geoJsonParser);
-      // console.log(points);
+      console.log(points);
       setMarkers(points);
     } catch (error) {
       console.error("Error fetching data:", error);
