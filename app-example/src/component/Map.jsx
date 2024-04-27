@@ -16,25 +16,25 @@ const useStyles = makeStyles(() => ({
     height: "10vh",
     width: "100%",
     position: "absolute",
-    "z-index": "-1"
+    "z-index": "-1",
   },
 }));
 
-function MapComponent({selectedCity}) {
+function MapComponent({ selectedCity }) {
   const classes = useStyles();
   const [markers, setMarkers] = useState([]);
   const [polygons, setPolygons] = useState([]);
 
   useEffect(() => {
     fetchBusStop(selectedCity);
-    fetchCity();
+    fetchCity(selectedCity);
   }, [selectedCity]);
 
   const fetchBusStop = async (cityName) => {
     try {
       let url = "http://localhost:5000/busstop";
       if (cityName) {
-        url += `?city=${encodeURIComponent(cityName)}`;
+        url += `?city=${cityName}`;
       }
       const response = await axios.get(url);
       const points = response.data.map(geoJsonParser);
@@ -44,13 +44,16 @@ function MapComponent({selectedCity}) {
       console.error("Error fetching data:", error);
     }
   };
-
-  const fetchCity = async () => {
+  const fetchCity = async (cityName) => {
     try {
-      const response = await axios.get(
-        "https://service.pdok.nl/lv/bag/wfs/v2_0?request=GetFeature&service=WFS&version=2.0.0&outputFormat=application%2Fjson%3B%20subtype%3Dgeojson&typeName=bag:woonplaats&FILTER=%3CFilter%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Ewoonplaats%3C/PropertyName%3E%3CLiteral%3EEnschede%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Filter%3E"
-        // "https://service.pdok.nl/lv/bag/wfs/v2_0?request=GetFeature&service=WFS&version=1.1.0&outputFormat=application%2Fjson%3B%20subtype%3Dgeojson&typeName=bag:woonplaats&FeatureID=woonplaats.e056df53-0d6b-4c6c-90ac-9c54453593aa,woonplaats.27fd8d3c-84e7-4fba-8555-75fc722c39ee,woonplaats.8261516e-b316-4b81-a6d8-6127622050e8"
-      );
+      let url =
+        "https://service.pdok.nl/lv/bag/wfs/v2_0?request=GetFeature&service=WFS&version=2.0.0&outputFormat=application%2Fjson%3B%20subtype%3Dgeojson&typeName=bag:woonplaats";
+      if (cityName) {
+        url += `&FILTER=%3CFilter%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Ewoonplaats%3C/PropertyName%3E%3CLiteral%3E${cityName}%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Filter%3E`;
+      } else {
+        url += "&FILTER=%3CFilter%3E%3COR%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Ewoonplaats%3C/PropertyName%3E%3CLiteral%3EEnschede%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Ewoonplaats%3C/PropertyName%3E%3CLiteral%3EHengelo%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Ewoonplaats%3C/PropertyName%3E%3CLiteral%3EHaaksbergen%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/OR%3E%3C/Filter%3E";
+      }
+      const response = await axios.get(url);
       const reprojected = convertCRS(response.data);
       const flipped = flipCoordinates(reprojected);
       const polygons = flipped.features.map(geoJsonParserWfs);
