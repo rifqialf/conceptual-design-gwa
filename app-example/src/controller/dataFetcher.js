@@ -1,13 +1,25 @@
-const {busstopData} = require("../model/data")
+const { busStopData } = require("../model/data");
 
 async function getBusstopData(req, res) {
+  const city = req.query;
   try {
-    const { rows } = await busstopData();
+    let query = `SELECT id, city, ST_AsGeoJSON(ST_FlipCoordinates(geom)) FROM enschede.bus_stop`;
+
+    const queryParams = [];
+    if (Object.keys(city).length !== 0) {
+      query += ` WHERE city = '${city.city}'`;
+      queryParams.push(city);
+    } else {
+      query += ` WHERE city = 'Enschede' OR city = 'Haaksbergen' OR city = 'Hengelo'`;
+    }
+
+    const { rows } = await busStopData(query);
     res.json(rows);
+
   } catch (err) {
     console.error("Internal Server Error", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
-module.exports = {getBusstopData};
+module.exports = { getBusstopData };

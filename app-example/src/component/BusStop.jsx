@@ -4,8 +4,8 @@ import PopupComponent from "./PopupInfo.jsx";
 
 function BusStopComponent(data) {
   return (
-    <Marker key={data.gid} position={data.st_asgeojson.coordinates}>
-      {PopupComponent("Station Name: " + data.station_name)}
+    <Marker key={data.id} position={data.st_asgeojson.coordinates}>
+      {PopupComponent("Station ID: " + data.id)}
     </Marker>
   );
 }
