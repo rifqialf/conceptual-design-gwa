@@ -4,7 +4,11 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import axios from "axios";
 import geoJsonParser from "../controller/geoJsonParser.js";
+
+import Box from '@mui/material/Box';
 import { Typography } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import UndoOutlinedIcon from "@mui/icons-material/UndoOutlined";
 
 const useStyles = makeStyles(() => ({
   chartContainer: {
@@ -19,10 +23,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function PieChartComponent() {
+function PieChartComponent({ onCityClick }) {
   const classes = useStyles();
   const [chartData, setChartData] = useState([]);
-  const [selectedCityData, setSelectedCityData] = useState([]);
 
   useEffect(() => {
     fetchBusStop();
@@ -58,20 +61,31 @@ function PieChartComponent() {
     }
   };
 
-  function PieOnClick() {
+  const handleItemClick = (event, data) => {
+    const selectedCity = chartData[data.dataIndex].label;
+    onCityClick(selectedCity);
+  };
 
-    
-
-    setChartData()
-
-
-  }
+  const handleNullClick = (event, data) => {
+    onCityClick(null);
+  };
 
   return (
     <div className={classes.chartContainer}>
-      <Typography variant="h6" align="center" gutterBottom>
-        Bus Stop by City
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h6" align="center" gutterBottom>
+          Bus Stop by City
+        </Typography>
+        <IconButton aria-label="reset" size="small" onClick={handleNullClick}>
+          <UndoOutlinedIcon fontSize="small" />
+        </IconButton>
+      </Box>
       <PieChart
         series={[
           {
@@ -81,7 +95,7 @@ function PieChartComponent() {
         ]}
         width={400}
         height={200}
-        // onItemClick={(event, d) => set(d)}
+        onItemClick={handleItemClick}
       />
     </div>
   );

@@ -20,19 +20,23 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function MapComponent() {
+function MapComponent({selectedCity}) {
   const classes = useStyles();
   const [markers, setMarkers] = useState([]);
   const [polygons, setPolygons] = useState([]);
 
   useEffect(() => {
-    fetchAllBusStop();
+    fetchBusStop(selectedCity);
     fetchCity();
-  }, []);
+  }, [selectedCity]);
 
-  const fetchAllBusStop = async () => {
+  const fetchBusStop = async (cityName) => {
     try {
-      const response = await axios.get("http://localhost:5000/busstop");
+      let url = "http://localhost:5000/busstop";
+      if (cityName) {
+        url += `?city=${encodeURIComponent(cityName)}`;
+      }
+      const response = await axios.get(url);
       const points = response.data.map(geoJsonParser);
       console.log(points);
       setMarkers(points);
@@ -45,7 +49,7 @@ function MapComponent() {
     try {
       const response = await axios.get(
         "https://service.pdok.nl/lv/bag/wfs/v2_0?request=GetFeature&service=WFS&version=2.0.0&outputFormat=application%2Fjson%3B%20subtype%3Dgeojson&typeName=bag:woonplaats&FILTER=%3CFilter%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Ewoonplaats%3C/PropertyName%3E%3CLiteral%3EEnschede%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Filter%3E"
-        // "https://service.pdok.nl/lv/bag/wfs/v2_0?request=GetFeature&service=WFS&version=1.1.0&outputFormat=application%2Fjson%3B%20subtype%3Dgeojson&typeName=bag:woonplaats&featureID=woonplaats.e056df53-0d6b-4c6c-90ac-9c54453593aa,woonplaats.27fd8d3c-84e7-4fba-8555-75fc722c39ee,woonplaats.8261516e-b316-4b81-a6d8-6127622050e8"
+        // "https://service.pdok.nl/lv/bag/wfs/v2_0?request=GetFeature&service=WFS&version=1.1.0&outputFormat=application%2Fjson%3B%20subtype%3Dgeojson&typeName=bag:woonplaats&FeatureID=woonplaats.e056df53-0d6b-4c6c-90ac-9c54453593aa,woonplaats.27fd8d3c-84e7-4fba-8555-75fc722c39ee,woonplaats.8261516e-b316-4b81-a6d8-6127622050e8"
       );
       const reprojected = convertCRS(response.data);
       const flipped = flipCoordinates(reprojected);

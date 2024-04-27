@@ -10,7 +10,7 @@ async function getBusstopData(req, res) {
       query += ` WHERE city = '${city.city}'`;
       queryParams.push(city);
     } else {
-      query += ` WHERE city = 'Enschede' OR city = 'Hengelo' OR city = 'Haaksbergen'`;
+      query += ` WHERE city = 'Enschede' OR city = 'Haaksbergen' OR city = 'Hengelo'`;
     }
 
     const { rows } = await busStopData(query);
