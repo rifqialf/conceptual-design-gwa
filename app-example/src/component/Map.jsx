@@ -44,6 +44,7 @@ function MapComponent({ selectedCity }) {
       console.error("Error fetching data:", error);
     }
   };
+  
   const fetchCity = async (cityName) => {
     try {
       let url =
@@ -57,7 +58,7 @@ function MapComponent({ selectedCity }) {
       const reprojected = convertCRS(response.data);
       const flipped = flipCoordinates(reprojected);
       const polygons = flipped.features.map(geoJsonParserWfs);
-      // console.log(polygons);
+      console.log(polygons);
       setPolygons(polygons);
     } catch (error) {
       console.error("Error fetching data:", error);
