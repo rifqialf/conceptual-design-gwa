@@ -5,10 +5,8 @@ async function getBusstopData(req, res) {
   try {
     let query = `SELECT id, city, ST_AsGeoJSON(ST_FlipCoordinates(geom)) FROM enschede.bus_stop`;
 
-    const queryParams = [];
     if (Object.keys(city).length !== 0) {
       query += ` WHERE city = '${city.city}'`;
-      queryParams.push(city);
     } else {
       query += ` WHERE city = 'Enschede' OR city = 'Haaksbergen' OR city = 'Hengelo'`;
     }
