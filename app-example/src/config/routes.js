@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const {getBusstopData} = require("../controller/dataFetcher");
+const { busStopData } = require("../model/busstop");
 
 function routers() {
-  router.get("/busstop", getBusstopData);
+  router.get("/busstop", busStopData);
 }
 
-routers()
+routers();
 
 module.exports = router;
