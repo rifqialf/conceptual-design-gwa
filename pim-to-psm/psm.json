@@ -1,0 +1,242 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.org/schema/infra.json",
+    "$defs": {
+        "PostGIS": {
+            "$anchor": "PostGIS",
+            "type": "object",
+            "properties": {
+                "st_asGeoJSON": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "st_flipCoordinates": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "extends": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    }
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "PostgreSQL": {
+            "$anchor": "PostgreSQL",
+            "type": "object",
+            "properties": {
+                "user": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "database": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "query": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "isExtendedBy": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                },
+                "contains": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "BusStopData": {
+            "$anchor": "BusStopData",
+            "type": "object",
+            "properties": {
+                "schemaName": {
+                    "type": "string"
+                },
+                "tableName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "int"
+                },
+                "city": {
+                    "type": "array",
+                    "minItems": 0,
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [
+                        "Enschede",
+                        "Haaksbergen",
+                        "Hengelo"
+                    ]
+                },
+                "geom": {
+                    "type": {
+                        "$ref": "#/$defs/GeometryType"
+                    },
+                    "default": "GM_Point"
+                },
+                "filter": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    },
+                    "minItems": 0,
+                    "default": [
+                        "Enschede",
+                        "Haaksbergen",
+                        "Hengelo"
+                    ]
+                },
+                "isRetrievedBy": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "BusStopDataRetrieval": {
+            "$anchor": "BusStopDataRetrieval",
+            "type": "object",
+            "properties": {
+                "request": {
+                    "type": {
+                        "$ref": "#/$defs/City"
+                    },
+                    "minItems": 0,
+                    "items": {
+                        "type": "string"
+                    },
+                    "uniqueItems": true
+                },
+                "response": {
+                    "type": "object"
+                },
+                "async": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "catchError": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "retrieves": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                },
+                "isRetrievedBy": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "BusStopRoute": {
+            "$anchor": "BusStopRoute",
+            "type": "object",
+            "properties": {
+                "path": {
+                    "type": "string",
+                    "default": "/busstop"
+                },
+                "method": {
+                    "type": "string",
+                    "default": "get"
+                },
+                "setRouter": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "retrieves": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "Function": {
+            "$anchor": "Function",
+            "type": "object",
+            "properties": {
+                "parameter": {
+                    "type": "array",
+                    "minItems": 0,
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "City": {
+            "$anchor": "City",
+            "type": "string",
+            "enum": [
+                "Enschede",
+                "Haaksbergen",
+                "Hengelo"
+            ]
+        },
+        "GeometryType": {
+            "$anchor": "GeometryType",
+            "type": "string",
+            "enum": [
+                "GM_Point",
+                "GM_Curve",
+                "GM_Surface",
+                "GM_MultiPoint",
+                "GM_MultiCurve",
+                "GM_MultiSurface",
+                "GM_Aggregate",
+                "GM_Object"
+            ]
+        }
+    }
+}

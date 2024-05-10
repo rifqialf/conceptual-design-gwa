@@ -1,0 +1,326 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.org/schema/infra.json",
+    "$defs": {
+        "BusStopDataStore": {
+            "$anchor": "BusStopDataStore",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-to-psm/pim-profile-diagram/profile-pim-model#/$defs/"
+            },
+            "properties": {
+                "datastorename": {
+                    "type": {
+                        "$ref": "#/$defs/Database"
+                    },
+                    "default": "postgresql"
+                },
+                "location": {
+                    "type": "string",
+                    "default": "localhost"
+                },
+                "contains": {
+                    "type": "array",
+                    "minItems": 0,
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "BusStop": {
+            "$anchor": "BusStop",
+            "type": "object",
+            "properties": {
+                "geom": {
+                    "type": {
+                        "$ref": "#/$defs/GeometryType"
+                    },
+                    "default": "GM_Point"
+                },
+                "sourceCRS": {
+                    "type": {
+                        "$ref": "#/$defs/CoordinateReferenceSystem"
+                    },
+                    "default": "EPSG:4326"
+                },                
+                "relevantAttributes": {
+                    "type": "array",
+                    "minItems": 0,
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [
+                        "id",
+                        "city"
+                    ]
+                },
+                "attributeFilter": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    },
+                    "minItems": 0,
+                    "default": {
+                        "type": {
+                            "$ref": "#/$defs/CityName"
+                        }
+                    }
+                },
+                "isContainedBy": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                },
+                "isDisplayedBy": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                },
+                "isBoundBy": {
+                    "type": "array",
+                    "minItems": 0,
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                }                
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "CityBoundary": {
+            "$anchor": "CityBoundary",
+            "type": "object",
+            "properties": {
+                "provider": {
+                    "type": "string",
+                    "default": "PDOK"
+                },
+                "geom": {
+                    "type": {
+                        "$ref": "#/$defs/GeometryType"
+                    },
+                    "default": "GM_Surface"
+                },
+                "sourceCRS": {
+                    "type": {
+                        "$ref": "#/$defs/CoordinateReferenceSystem"
+                    },
+                    "default": "EPSG:28992"
+                },
+                "relevantAttributes": {
+                    "type": "array",
+                    "minItems": 0,
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [
+                        "woonplaats",
+                        "status"
+                    ]
+                },
+                "attributeFilter": {
+                    "type": {
+                        "$ref": "#/$defs/CRS"
+                    },
+                    "default": "EPSG:28992"
+                },
+                "isDisplayedBy": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "BaseMap": {
+            "$anchor": "BaseMap",
+            "type": "object",
+            "properties": {
+                "provider": {
+                    "type": {
+                        "$ref": "#/$defs/BaseMapProvider"
+                    },
+                    "default": "OpenStreetMap"
+                },
+                "sourceCRS": {
+                    "type": {
+                        "$ref": "#/$defs/CoordinateReferenceSystem"
+                    },
+                    "default": "EPSG:3857"
+                },
+                "isDisplayedBy": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "BusStopChartByCity": {
+            "$anchor": "BusStopChartByCity",
+            "type": "object",
+            "properties": {
+                "visualizationTitle": {
+                    "type": "string",
+                    "default": "Bus Stop by City"
+                },
+                "chartType": {
+                    "type": "string",
+                    "default": "Pie Chart"
+                },
+                "selectCity": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "resetSelection": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "link": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                },
+                "binds": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "Map": {
+            "$anchor": "Map",
+            "type": "object",
+            "properties": {
+                "targetCRS": {
+                    "type": {
+                        "$ref": "#/$defs/CoordinateReferenceSystem"
+                    },
+                    "default": "EPSG:4326"
+                },
+                "updateMap": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "dragMap": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "zoomMap": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "selectDisplayedData": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "showDataInformation": {
+                    "type": {
+                        "$ref": "#/$defs/Function"
+                    }
+                },
+                "link": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                },
+                "displays": {
+                    "type": "array",
+                    "minItems": 0,
+                    "items": {
+                        "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                    },
+                    "uniqueItems": true
+                }
+            },
+            "required": [
+                "properties"
+            ]
+        },
+        "Database": {
+            "$anchor": "Database",
+            "type": "string",
+            "enum": [
+                "PostgreSql",
+                "MySQL",
+                "SQLite",
+                "MariaDB",
+                "Oracle",
+                "Microsoft Access"
+            ]
+        },
+        "CoordinateReferenceSystem": {
+            "$anchor": "CoordinateReferenceSystem",
+            "type": "string",
+            "enum": [
+                "EPSG:4326",
+                "EPSG:28992",
+                "EPSG:3857"
+            ]
+        },
+        "GeometryType": {
+            "$anchor": "GeometryType",
+            "type": "string",
+            "enum": [
+                "GM_Point",
+                "GM_Curve",
+                "GM_Surface",
+                "GM_MultiPoint",
+                "GM_MultiCurve",
+                "GM_MultiSurface",
+                "GM_Aggregate",
+                "GM_Object"
+            ]
+        },
+        "BaseMapProvider": {
+            "$anchor": "GeospatialWebService",
+            "type": "string",
+            "enum": [
+                "OpenStreetMap",
+                "Google Map",
+                "Mapbox"
+            ]
+        }
+    }
+}
