@@ -5,7 +5,7 @@
         "BusStopDataStore": {
             "$anchor": "BusStopDataStore",
             "type": {
-                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-to-psm/pim-profile-diagram/profile-pim-model#/$defs/"
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-to-psm/pim-profile-diagram/profile-pim-model#/$defs/LocalDataStore"
             },
             "properties": {
                 "datastorename": {
@@ -33,7 +33,9 @@
         },
         "BusStop": {
             "$anchor": "BusStop",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-to-psm/pim-profile-diagram/profile-pim-model#/$defs/Dataset/VectorDataset"
+            },
             "properties": {
                 "geom": {
                     "type": {
@@ -100,7 +102,9 @@
         },
         "CityBoundary": {
             "$anchor": "CityBoundary",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-to-psm/pim-profile-diagram/profile-pim-model#/$defs/WebFeatureService"
+            },
             "properties": {
                 "provider": {
                     "type": "string",
@@ -150,7 +154,9 @@
         },
         "BaseMap": {
             "$anchor": "BaseMap",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-to-psm/pim-profile-diagram/profile-pim-model#/$defs/WebMapTileService"
+            },
             "properties": {
                 "provider": {
                     "type": {
@@ -179,7 +185,9 @@
         },
         "BusStopChartByCity": {
             "$anchor": "BusStopChartByCity",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-to-psm/pim-profile-diagram/profile-pim-view#/$defs/ChartDisplay"
+            },
             "properties": {
                 "visualizationTitle": {
                     "type": "string",
@@ -223,7 +231,9 @@
         },
         "Map": {
             "$anchor": "Map",
-            "type": "object",
+            "type": {
+                "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-to-psm/pim-profile-diagram/profile-pim-view#/$defs/MapDisplay"
+            },
             "properties": {
                 "targetCRS": {
                     "type": {
