@@ -1,6 +1,6 @@
 import React from "react";
 import { Polygon } from "react-leaflet";
-// import PopupComponent from "./PopupInfo.jsx";
+import PopupComponent from "./PopupInfo.jsx";
 
 function CityComponent(data) {
   return (
@@ -8,6 +8,7 @@ function CityComponent(data) {
       pathOptions={{ color: "gray" }}
       positions={data.geometry.coordinates}
     >
+    {PopupComponent("City Name: " + data.properties.woonplaats)}
     </Polygon>
   );
 }
