@@ -26,11 +26,11 @@ function MapComponent({ selectedCity }) {
   const [polygons, setPolygons] = useState([]);
 
   useEffect(() => {
-    fetchBusStop(selectedCity);
+    fetchBusStopLocation(selectedCity);
     fetchCity(selectedCity);
   }, [selectedCity]);
 
-  const fetchBusStop = async (cityName) => {
+  const fetchBusStopLocation = async (cityName) => {
     try {
       let url = "http://localhost:5000/busstop";
       if (cityName) {
