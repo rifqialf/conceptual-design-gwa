@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import geoJsonParser from "../controller/geoJsonParser.js";
 
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import UndoOutlinedIcon from "@mui/icons-material/UndoOutlined";
@@ -20,6 +20,7 @@ const useStyles = makeStyles(() => ({
     left: "10px",
     "padding-top": "10px",
     "padding-bottom": "10px",
+    "border-radius": "25px",
   },
 }));
 
@@ -28,16 +29,17 @@ function PieChartComponent({ onCityClick }) {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    fetchBusStop();
-  }, []);
+    generateBusStopChartData();
+  });
 
-  const fetchBusStop = async () => {
+  const generateBusStopChartData = async () => {
     try {
       const response = await axios.get("http://localhost:5000/busstop");
       const points = response.data.map(geoJsonParser);
 
       // Calculate the number of points per city
       if (points && points.length > 0) {
+        
         const cityCounts = {};
         points.forEach((item) => {
           const cityName = item.city;
@@ -47,7 +49,7 @@ function PieChartComponent({ onCityClick }) {
             cityCounts[cityName] = 1;
           }
         });
-
+    
         // Prepare chart data with unique city names and counts
         const cityData = Object.keys(cityCounts).map((cityName, index) => ({
           id: index,
@@ -60,13 +62,13 @@ function PieChartComponent({ onCityClick }) {
       console.error("Error fetching data:", error);
     }
   };
-
+  
   const handleItemClick = (event, data) => {
     const selectedCity = chartData[data.dataIndex].label;
     onCityClick(selectedCity);
   };
 
-  const handleNullClick = (event, data) => {
+  const resetClick = (event, data) => {
     onCityClick(null);
   };
 
@@ -82,7 +84,7 @@ function PieChartComponent({ onCityClick }) {
         <Typography variant="h6" align="center" gutterBottom>
           Bus Stop by City
         </Typography>
-        <IconButton aria-label="reset" size="small" onClick={handleNullClick}>
+        <IconButton aria-label="reset" size="small" onClick={resetClick}>
           <UndoOutlinedIcon fontSize="small" />
         </IconButton>
       </Box>
