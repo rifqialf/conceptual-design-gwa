@@ -3,7 +3,7 @@ import { PieChart } from "@mui/x-charts";
 import { makeStyles } from "@material-ui/core/styles";
 
 import axios from "axios";
-import geoJsonParser from "../controller/geoJsonParser.js";
+import jsonParser from "../controller/jsonParser.js";
 
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
@@ -35,7 +35,7 @@ function PieChartComponent({ onCityClick }) {
   const generateBusStopChartData = async () => {
     try {
       const response = await axios.get("http://localhost:5000/busstop");
-      const points = response.data.map(geoJsonParser);
+      const points = response.data.map(jsonParser);
 
       // Calculate the number of points per city
       if (points && points.length > 0) {

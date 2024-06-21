@@ -5,14 +5,14 @@ import jsbeautifier
 
 # What to do for now: Create another PSM-JSON to Code transformation for a class with a simple relationship (?)
 # What to do for now: Create another PSM-JSON to Code transformation for a class with stereotyped relationship
-### When the python runs, user will be asked for JSON file
-### There will be pre-processing of the JSON before we enter the classes of each targeted file
-### The class will not read the JSON file, but rather a pre-navigated elements of the JSON
+# When the python runs, user will be asked for JSON file
+# There will be pre-processing of the JSON before we enter the classes of each targeted file
+# The class will not read the JSON file, but rather a pre-navigated elements of the JSON
 
 
 # Specify JSON, then copy the contents
 project_path = (
-    "C:/Users/alfat/Documents/Codes/thesis/uml2json/psm001bd/"  # This can be input
+    "C:/Users/alfat/Documents/Codes/thesis/conceptual-design-gwa/psm001bd-to-code/"  # This can be input
 )
 project_result_path = os.path.join(project_path, "result/")
 json_file = "psm001bd.json"  # This can be input

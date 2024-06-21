@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "$id": "http://example.org/schema/infra.json",
+    "$id": "",
     "$defs": {
         "BusStopDataStore": {
             "$anchor": "BusStopDataStore",
@@ -37,7 +37,7 @@
                 "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-to-psm/pim-profile-diagram/profile-pim-model#/$defs/Dataset/VectorDataset"
             },
             "properties": {
-                "geom": {
+                "geometry": {
                     "type": {
                         "$ref": "#/$defs/GeometryType"
                     },
@@ -100,6 +100,11 @@
                 "properties"
             ]
         },
+
+
+
+
+        
         "CityBoundary": {
             "$anchor": "CityBoundary",
             "type": {

@@ -7,8 +7,8 @@ import CityComponent from "./City.jsx";
 import BusStopComponent from "./BusStop.jsx";
 import TileLayerComponent from "./Tilelayer.jsx";
 
-import geoJsonParser from "../controller/geoJsonParser.js";
-import geoJsonParserWfs from "../controller/geoJsonParserWfs.js";
+import jsonParser from "../controller/jsonParser.js";
+import jsonParserWfs from "../controller/jsonParserWfs.js";
 import { convertCRS, flipCoordinates } from "../controller/convertCrs.js";
 
 const useStyles = makeStyles(() => ({
@@ -26,18 +26,18 @@ function MapComponent({ selectedCity }) {
   const [polygons, setPolygons] = useState([]);
 
   useEffect(() => {
-    fetchBusStopLocation(selectedCity);
-    fetchCity(selectedCity);
+    fetchBusStopData(selectedCity);
+    fetchCityBoundaryData(selectedCity);
   }, [selectedCity]);
 
-  const fetchBusStopLocation = async (cityName) => {
+  const fetchBusStopData = async (cityName) => {
     try {
       let url = "http://localhost:5000/busstop";
       if (cityName) {
         url += `?city=${cityName}`;
       }
       const response = await axios.get(url);
-      const points = response.data.map(geoJsonParser);
+      const points = response.data.map(jsonParser);
       console.log(points);
       setMarkers(points);
     } catch (error) {
@@ -45,10 +45,10 @@ function MapComponent({ selectedCity }) {
     }
   };
   
-  const fetchCity = async (cityName) => {
+  const fetchCityBoundaryData = async (cityName) => {
     try {
       let url =
-        "https://service.pdok.nl/lv/bag/wfs/v2_0?request=GetFeature&service=WFS&version=2.0.0&outputFormat=application%2Fjson%3B%20subtype%3Dgeojson&typeName=bag:woonplaats";
+        "https://service.pdok.nl/lv/bag/wfs/v2_0?request=GetFeature&service=WFS&version=2.0.0&outputFormat=application%2Fjson%3B%20subtype%3Djson&typeName=bag:woonplaats";
       if (cityName) {
         url += `&FILTER=%3CFilter%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Ewoonplaats%3C/PropertyName%3E%3CLiteral%3E${cityName}%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Filter%3E`;
       } else {
@@ -57,7 +57,7 @@ function MapComponent({ selectedCity }) {
       const response = await axios.get(url);
       const reprojected = convertCRS(response.data);
       const flipped = flipCoordinates(reprojected);
-      const polygons = flipped.features.map(geoJsonParserWfs);
+      const polygons = flipped.features.map(jsonParserWfs);
       console.log(polygons);
       setPolygons(polygons);
     } catch (error) {
