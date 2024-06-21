@@ -2,10 +2,10 @@
     "$schema": "https://json-schema.org/draft/2019-09/schema",
     "$id": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json",
     "$defs": {
-        "Operation": {
-            "$anchor": "Operation",
-            "title": "operation",
-            "description": "definition of an UML class operation",
+        "Function": {
+            "$anchor": "Function",
+            "title": "function",
+            "description": "definition of a function to represent UML class operation",
             "type": "object",
             "required": [
                 "href"
@@ -23,12 +23,12 @@
                 },
                 "title": {
                     "type": "string",
-                    "description": "Used to label the name of the operation.",
+                    "description": "Used to label the name of the function.",
                     "example": "AttributeFilter"
                 },
                 "parameter": {
                     "type": "string",
-                    "description": "The parameter passed as argument to the operation.",
+                    "description": "The parameter passed as argument to the function.",
                     "example": "Point-01"
                 }
             }
