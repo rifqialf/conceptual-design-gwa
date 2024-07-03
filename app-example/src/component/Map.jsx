@@ -26,11 +26,11 @@ function MapComponent({ selectedCity }) {
   const [polygons, setPolygons] = useState([]);
 
   useEffect(() => {
-    fetchBusStopData(selectedCity);
-    fetchCityBoundaryData(selectedCity);
+    fetchBusStop(selectedCity);
+    fetchCityBoundary(selectedCity);
   }, [selectedCity]);
 
-  const fetchBusStopData = async (cityName) => {
+  const fetchBusStop = async (cityName) => {
     try {
       let url = "http://localhost:5000/busstop";
       if (cityName) {
@@ -45,10 +45,10 @@ function MapComponent({ selectedCity }) {
     }
   };
   
-  const fetchCityBoundaryData = async (cityName) => {
+  const fetchCityBoundary = async (cityName) => {
     try {
       let url =
-        "https://service.pdok.nl/lv/bag/wfs/v2_0?request=GetFeature&service=WFS&version=2.0.0&outputFormat=application%2Fjson%3B%20subtype%3Djson&typeName=bag:woonplaats";
+        "https://service.pdok.nl/lv/bag/wfs/v2_0?request=GetFeature&service=WFS&version=2.0.0&outputFormat=application/json;%20subtype=geojson&typeName=bag:woonplaats";
       if (cityName) {
         url += `&FILTER=%3CFilter%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Ewoonplaats%3C/PropertyName%3E%3CLiteral%3E${cityName}%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Filter%3E`;
       } else {

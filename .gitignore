@@ -1,4 +1,6 @@
 conceptual-design-gwa.code-workspace
+backup/
+
 # Logs
 logs
 *.log

@@ -19,3 +19,4 @@ const busStopData = async (req, res) => {
 }
 
 module.exports = { busStopData };
+

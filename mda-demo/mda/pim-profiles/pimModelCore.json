@@ -1,0 +1,214 @@
+{
+    "Dataset": {
+        "$anchor": "Dataset",
+        "type": {
+            "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-profile-stereotypes/pimModelCore.json#/$defs/DataSet"
+        },
+        "properties": {
+            "isOfferedBy": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            },
+            "isDisplayedBy": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            },
+            "isProcessedBy": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            },
+            "isBoundBy": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            }
+        },
+        "required": []
+    },
+    "SpatialDataset": {
+        "$anchor": "SpatialDataset",
+        "type": {
+            "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-profile-stereotypes/pimModelCore.json#/$defs/SpatialDataSet"
+        },
+        "properties": {
+            "sourceCRS": {
+                "type": "string",
+                "default": ""
+            },
+            "isOfferedBy": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            },
+            "isDisplayedBy": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            },
+            "isProcessedBy": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            },
+            "isBoundBy": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            }
+        },
+        "required": [
+            "sourceCRS"
+        ]
+    },
+    "VectorDataset": {
+        "$anchor": "VectorDataset",
+        "type": {
+            "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-profile-stereotypes/pimModelCore.json#/$defs/VectorDataSet"
+        },
+        "properties": {
+            "sourceCRS": {
+                "type": "string",
+                "default": ""
+            },
+            "geometry": {
+                "type": "string",
+                "default": ""
+            },
+            "relevantAttributes": {
+                "type": "array",
+                "minItems": 0,
+                "items": {
+                    "type": "string"
+                },
+                "default": ""
+            },
+            "isOfferedBy": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            },
+            "isDisplayedBy": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            },
+            "isProcessedBy": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            },
+            "isBoundBy": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            },
+            "attributeFilter": {
+                "type": {
+                    "$ref": "#/$defs/Function"
+                },
+                "minItems": 0,
+                "maxItems": 1,
+                "default": {
+                    "attribute": {
+                        "type": "object",
+                        "default": ""
+                    }
+                }
+            }
+        },
+        "required": [
+            "sourceCRS",
+            "geometry"
+        ]
+    },
+    "DataStore": {
+        "$anchor": "DataStore",
+        "type": {
+            "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-profile-stereotypes/pimModelCore.json#/$defs/DataStore"
+        },
+        "properties": {
+            "dataStoreName": {
+                "type": "string",
+                "default": ""
+            },
+            "offer": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            }
+        },
+        "required": [
+            "dataStoreName"
+        ]
+    },
+    "LocalDataStore": {
+        "$anchor": "LocalDataStore",
+        "type": {
+            "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-profile-stereotypes/pimModelCore.json#/$defs/LocalDataStore"
+        },
+        "properties": {
+            "dataStoreName": {
+                "type": "string",
+                "default": ""
+            },
+            "ipAddress": {
+                "type": "string",
+                "default": ""
+            },
+            "offer": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueItems": true
+            }
+        },
+        "required": [
+            "dataStoreName",
+            "ipAddress"
+        ]
+    }
+}
