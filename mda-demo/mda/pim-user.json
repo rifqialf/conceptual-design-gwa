@@ -1,0 +1,89 @@
+{
+    "BusStop": {
+        "$anchor": "BusStop",
+        "type": {
+            "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-profile-stereotypes/pimModelCore.json#/$defs/VectorDataset"
+        },
+        "properties": {
+            "geometry": {
+                "type": {
+                    "$ref": "#/$defs/GeometryType"
+                },
+                "default": "GM_Point"
+            },
+            "sourceCRS": {
+                "type": {
+                    "$ref": "#/$defs/CoordinateReferenceSystem"
+                },
+                "default": "EPSG:4326"
+            },
+            "relevantAttributes": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "default": [
+                    "id",
+                    "city"
+                ]
+            },
+            "attributeFilter": {
+                "type": {
+                    "$ref": "#/$defs/Function"
+                },
+                "minitems": 0,
+                "maxitems": 1,
+                "default": {
+                    "attribute": {
+                        "type": {
+                            "$ref": "#/$defs/CityName"
+                        },
+                        "default": ""
+                    }
+                }
+            },
+            "isOfferedBy": {
+                "type": "array",
+                "minitems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueitems": true
+            }
+        },
+        "required": [
+            "sourceCRS",
+            "geometry"
+        ]
+    },
+    "BusStopDataStore": {
+        "$anchor": "BusStopDataStore",
+        "type": {
+            "$ref": "https://raw.githubusercontent.com/rifqialf/conceptual-design-gwa/main/pim-profile-stereotypes/pimModelCore.json#/$defs/LocalDataStore"
+        },
+        "properties": {
+            "datastorename": {
+                "type": {
+                    "$ref": "#/$defs/Database"
+                },
+                "default": "postgresql"
+            },
+            "ipAddress": {
+                "type": "string",
+                "default": "127.0.0.1"
+            },
+            "offers": {
+                "type": "array",
+                "minitems": 1,
+                "items": {
+                    "$ref": "https://register.geostandaarden.nl/jsonschema/uml2json/0.1/schema_definitions.json#/$defs/LinkObject"
+                },
+                "uniqueitems": true
+            }
+        },
+        "required": [
+            "dataStoreName",
+            "ipAddress"
+        ]
+    }
+}
