@@ -1,4 +1,4 @@
-<img width="4452" alt="Thesis - UML Diagram (93)" src="https://github.com/user-attachments/assets/daf12f23-9a13-4a4c-b153-cd6deb24c9d8"># Introduction
+# Introduction
 This repository is part of MSc Thesis titled "A Model-Driven Approach for Developing REST-Based Geospatial Web Application Using UML Profiles" by Rifqi Alfadhillah Sentosa, defended at ITC University of Twente in July 2024
 
 # Abstract
@@ -16,6 +16,17 @@ The proposed approach lowers the barrier for GWA development, enabling GIS/RS pr
 
 # Repository Structure
 ## PIM Profiles
+### MVC Separation of Concerns for the UML profiles
+<img width="2132" alt="Thesis - UML Diagram (98)" src="https://github.com/user-attachments/assets/5c79fcb0-f99c-4dcb-9004-81e5cbc0a131">
+
+### PIM Model Profile
+<img width="5369" alt="Thesis - UML Diagram (99)" src="https://github.com/user-attachments/assets/d6bc8aea-ca15-4f58-b8af-30f5b64ea734">
+
+### PIM View Profile
+<img width="5281" alt="Thesis - UML Diagram (100)" src="https://github.com/user-attachments/assets/20cbdd9f-9df8-43b0-b422-53a8313b767c">
+
+### PIM Controller Profile
+<img width="1750" alt="Thesis - UML Diagram - 2024-07-15T091616 560" src="https://github.com/user-attachments/assets/6845e190-0c6c-4cb3-b8ea-0c4523b902fd">
 
 ## PSM Profiles
 <img width="4452" alt="Thesis - UML Diagram (93)" src="https://github.com/user-attachments/assets/40961c00-f355-46f8-a59d-3870f2051fd1">
