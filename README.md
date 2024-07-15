@@ -14,6 +14,9 @@ The proposed approach lowers the barrier for GWA development, enabling GIS/RS pr
 
 **Keywords**: Geospatial Web Application, Model Driven Development, Model Driven Architecture, UML, REST API, OGC API Standards
 
+# How to Use
+*A walkthrough video will be provided*
+
 # Repository Structure
 ## PIM Profiles
 In directory `/mda-demo/mda/pim-profiles` the transformation scripts for PIM-to-PSM and PSM-to-code can be found and used.
@@ -41,5 +44,3 @@ Figure below illustrates how the UML profiles for PSM development are structured
 
 ## Transformation Scripts
 In directory `/mda-demo/mda/transformation` the transformation scripts for PIM-to-PSM and PSM-to-code can be found and used.
-
-# How to Use
