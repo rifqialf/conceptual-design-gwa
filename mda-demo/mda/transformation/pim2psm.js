@@ -91,6 +91,8 @@ const transform = () => {
           .addAssociation_extends()
           .addAssociation_transforms();
         addToPSM(postgis.class);
+
+        postgresql.addAssociation_isExtendedBy()
       }
       addToPSM(postgresql.class);
     }
@@ -101,8 +103,8 @@ transform();
 
 // Writing the PSM JSON file
 const PSMstring = JSON.stringify(PSM);
-const resultFolderName = "./mda/";
-const resultFileName = "psm_transformation_result.json";
+const resultFolderName = "c:/Users/alfat/Documents/Codes/thesis/conceptual-design-gwa/mda-demo/mda/";
+const resultFileName = "psm_transformation_result1.json";
 
 fs.writeFile(path.join(resultFolderName, resultFileName), PSMstring, (err) => {
   if (err) console.log(err);
