@@ -27,10 +27,11 @@ Figure below illustrates pimModelCore.json containing stereotypes that user can 
 <img width="800" alt="Thesis - UML Diagram (99)" src="https://github.com/user-attachments/assets/d6bc8aea-ca15-4f58-b8af-30f5b64ea734">
 
 ### PIM View Profile
-Figure below illustrates pimModelCore.json containing stereotypes that user can use to design their PIM.
+Figure below illustrates pimViewCore.json containing stereotypes that user can use to design their PIM.
 <img width="800" alt="Thesis - UML Diagram (100)" src="https://github.com/user-attachments/assets/20cbdd9f-9df8-43b0-b422-53a8313b767c">
 
 ### PIM Controller Profile
+Figure below illustrates pimControllerCore.json containing stereotypes that user can use to design their PIM.
 <img width="800" alt="Thesis - UML Diagram - 2024-07-15T091616 560" src="https://github.com/user-attachments/assets/6845e190-0c6c-4cb3-b8ea-0c4523b902fd">
 
 ## PSM Profiles
