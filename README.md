@@ -16,7 +16,7 @@ The proposed approach lowers the barrier for GWA development, enabling GIS/RS pr
 
 # Repository Structure
 ## PIM Profiles
-In directory `/mda-demo/mda/transformation` the transformation scripts for PIM-to-PSM and PSM-to-code can be found and used.
+In directory `/mda-demo/mda/pim-profiles` the transformation scripts for PIM-to-PSM and PSM-to-code can be found and used.
 
 ### MVC Separation of Concerns for the UML profiles
 Figure below illustrates how UML profiles for buidling PIM implements MVC design pattern for separation of concerns.
@@ -35,6 +35,8 @@ Figure below illustrates pimControllerCore.json containing stereotypes that user
 <img width="800" alt="Thesis - UML Diagram - 2024-07-15T091616 560" src="https://github.com/user-attachments/assets/6845e190-0c6c-4cb3-b8ea-0c4523b902fd">
 
 ## PSM Profiles
+In directory `/mda-demo/mda/psm-profiles` the transformation scripts for PIM-to-PSM and PSM-to-code can be found and used.
+Figure below illustrates how the UML profiles for PSM development are structured based on MVC design pattern.
 <img width="800" alt="Thesis - UML Diagram (93)" src="https://github.com/user-attachments/assets/40961c00-f355-46f8-a59d-3870f2051fd1">
 
 ## Transformation Scripts
