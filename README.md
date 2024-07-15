@@ -31,7 +31,7 @@ The proposed approach lowers the barrier for GWA development, enabling GIS/RS pr
 ## PSM Profiles
 <img width="800" alt="Thesis - UML Diagram (93)" src="https://github.com/user-attachments/assets/40961c00-f355-46f8-a59d-3870f2051fd1">
 
-## PIM-to-Code Transformation Script
-## PIM-to-Code Transformation Script
+## Transformation Scripts
+In directory `/mda-demo/mda/transformation` the transformation scripts for PIM-to-PSM and PSM-to-code can be found and used
 
 # How to Use
