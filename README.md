@@ -1,5 +1,5 @@
 # Introduction
-This repository is part of MSc Thesis titled "A MODEL-DRIVEN APPROACH FOR DEVELOPING REST-BASED GEOSPATIAL WEB APPLICATION USING UML PROFILES" by Rifqi Alfadhillah Sentosa, defended at ITC University of Twente in July 2024
+This repository is part of MSc Thesis titled "A Model-Driven Approach for Developing REST-Based Geospatial Web Application Using UML Profiles" by Rifqi Alfadhillah Sentosa, defended at ITC University of Twente in July 2024
 
 # Abstract
 The development of geospatial web applications (GWAs) has seen significant advancements, one of which is with Model-Driven Development (MDD) and Model-Driven Architecture (MDA). MDA provides a systematic transformation of high-level models into executable computer code of applications, which provides a significant value as a development methodology for web application.
