@@ -1,4 +1,4 @@
-# Introduction
+<img width="4452" alt="Thesis - UML Diagram (93)" src="https://github.com/user-attachments/assets/daf12f23-9a13-4a4c-b153-cd6deb24c9d8"># Introduction
 This repository is part of MSc Thesis titled "A Model-Driven Approach for Developing REST-Based Geospatial Web Application Using UML Profiles" by Rifqi Alfadhillah Sentosa, defended at ITC University of Twente in July 2024
 
 # Abstract
@@ -15,5 +15,12 @@ The proposed approach lowers the barrier for GWA development, enabling GIS/RS pr
 **Keywords**: Geospatial Web Application, Model Driven Development, Model Driven Architecture, UML, REST API, OGC API Standards
 
 # Repository Structure
+## PIM Profiles
+
+## PSM Profiles
+<img width="4452" alt="Thesis - UML Diagram (93)" src="https://github.com/user-attachments/assets/40961c00-f355-46f8-a59d-3870f2051fd1">
+
+## PIM-to-Code Transformation Script
+## PIM-to-Code Transformation Script
 
 # How to Use
