@@ -1,4 +1,4 @@
-# 
+# Introduction
 This repository is part of MSc Thesis titled "A MODEL-DRIVEN APPROACH FOR DEVELOPING REST-BASED GEOSPATIAL WEB APPLICATION USING UML PROFILES" by Rifqi Alfadhillah Sentosa, defended at ITC University of Twente in July 2024
 
 # Abstract
@@ -8,3 +8,8 @@ This thesis proposed a new development approach that integrates UML profiles int
 The methodology was demonstrated through a detailed implementation process, resulting in a reproducible approach for developing GWAs. Several findings include the successful creation of UML profiles that capture common GWA functionalities and the development of efficient model transformation rules using the proposed approach.
 The proposed approach lowers the barrier for GWA development, enabling GIS/RS practitioners and developers to create customized web applications with minimal coding effort. This approach enhances the scalability and accessibility of GWA development, potentially leading to broader adoption and innovation in the field of REST-base geospatial web applications.  
 
+**Keywords**: Geospatial Web Application, Model Driven Development, Model Driven Architecture, UML, REST API, OGC API Standards
+
+# Repository Structure
+
+# How to Use
